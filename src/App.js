@@ -1,20 +1,21 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-import "./App.css";
+import classes from "./App.css";
+
 import Person from "./Person/Person";
 
-const StyledButton = styled.button`
-  background-color: ${(props) => (props.alt ? "red" : "green")};
-  color: white;
-  font: inherit;
-  border: 1x solid gray;
-  padding: 8px;
-  curser: pointer;
-  &:hover {
-    background-color: ${(props) => (props.alt ? "salmon" : "lightgreen")};
-    color: black;
-  }
-`;
+// const StyledButton = styled.button`
+//   background-color: ${(props) => (props.alt ? "red" : "green")};
+//   color: white;
+//   font: inherit;
+//   border: 1x solid gray;
+//   padding: 8px;
+//   curser: pointer;
+
+//   &:hover {
+//     background-color: ${(props) => (props.alt ? "salmon" : "lightgreen")};
+//     color: black;
+//   }
+// `;
 
 class App extends Component {
   state = {
@@ -82,6 +83,8 @@ class App extends Component {
 
     /******************* */
     let persons = null;
+    let btnClass = [classes.Button];
+
     if (this.state.showPersons) {
       persons = (
         <div>
@@ -98,23 +101,35 @@ class App extends Component {
           })}
         </div>
       );
+
+      btnClass.push(classes.Red);
+    }
+
+    /***************** */
+    const assignedClasses = [];
+    if (this.state.persons.length <= 2) {
+      assignedClasses.push(classes.red);
+    }
+    if (this.state.persons.length <= 1) {
+      assignedClasses.push(classes.bold);
     }
     /***************** */
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1>Hello world kh khhkhkkhk</h1>
-        <p>this is working and i love it </p>
-        <StyledButton
+        <p className={assignedClasses.join(" ")}>
+          this is working and i love it
+        </p>
+        <button
+          className={btnClass.join(" ")}
           alt={this.state.showPersons}
           onClick={this.togglePersonsHandler}
         >
           Switch Hide/View
-        </StyledButton>
+        </button>
         {persons}
       </div>
     );
-
-    // return React.createElement('div', {className:'App'}, React.createElement('h1', null, 'blablablablablalbabla'), 'Hi, I\'m a React App!! ' );
   }
 }
 
